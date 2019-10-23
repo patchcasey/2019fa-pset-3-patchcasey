@@ -60,4 +60,4 @@ def get_user_id(username: str) -> str:
 
 
 if __name__ == "__main__":
-    get_csci_salt()
+    print(hash_str(some_val='2019fa', salt=get_csci_salt()))
