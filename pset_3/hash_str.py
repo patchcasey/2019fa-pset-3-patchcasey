@@ -51,7 +51,7 @@ def hash_str(some_val: AnyStr, salt: AnyStr = ""):
     m.update(salt)
     m.update(some_val)
     # print(m.digest().hex()[:6])
-    return m.digest()
+    return m.digest().hex()[:8]
 
 
 def get_user_id(username: str) -> str:
@@ -60,4 +60,4 @@ def get_user_id(username: str) -> str:
 
 
 if __name__ == "__main__":
-    print(hash_str(some_val='2019fa', salt=get_csci_salt()))
+    print(hash_str(some_val='casey patch', salt=get_csci_salt()))

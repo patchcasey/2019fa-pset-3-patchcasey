@@ -2,6 +2,7 @@
 
 from .hash_str import get_csci_salt, get_user_id, hash_str
 from .io import atomic_write
+from .cli import main
 import pandas as pd
 import fastparquet
 import os
@@ -40,5 +41,4 @@ def parquet_conv(filename, cwd=os.getcwd(), datasourceformat=".xlsx"):
 
 
 if __name__ == "__main__":
-    call_getuserid()
-    parquet_conv(filename="hashed")
+    main()

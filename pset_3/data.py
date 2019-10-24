@@ -38,3 +38,7 @@ def load_data(filename):
 
     initial = pd.read_parquet(filename, engine='fastparquet')
     return initial
+
+x = load_data("C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/project.parquet")
+# y = pd.read_parquet(x,"fastparquet")
+x.to_csv("data.csv")
