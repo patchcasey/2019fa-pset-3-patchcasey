@@ -18,7 +18,7 @@ def main(args=None):
     embeddings = data['project'].apply(embedding.embed_document)
 
     def salted_hash(input):
-        return hash_str(some_val=input,salt=get_csci_salt())
+        return hash_str(some_val=input,salt=get_csci_salt()).hex()[:8]
 
     def return_vector(student_name, calculated_embeddings=embeddings):
         return calculated_embeddings.loc[student_name]

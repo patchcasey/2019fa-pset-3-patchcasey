@@ -51,7 +51,7 @@ def hash_str(some_val: AnyStr, salt: AnyStr = ""):
     m.update(salt)
     m.update(some_val)
     # print(m.digest().hex()[:6])
-    return m.digest().hex()[:8]
+    return m.digest()
 
 
 def get_user_id(username: str) -> str:
