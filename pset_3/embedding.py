@@ -27,7 +27,7 @@ class WordEmbedding(object):
                     count += 1
             finally:
                 if count == len(self.words):
-                    return 0
+                    return None
 
         word_vector = self.vecs[position_in_words]
         return word_vector
