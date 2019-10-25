@@ -8,11 +8,13 @@ def load_words(filename):
     :param str filename: path/name to file to load
     :rtype: list
     """
-
-    with open(filename, "r") as f:
-        lines = f.readlines()
-    results = [x for x in lines]
-    return results
+    if os.path.isfile(filename) is True:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+        results = [x for x in lines]
+        return results
+    else:
+        raise FileNotFoundError
 
 def load_vectors(filename):
     """Loads a file containing word vectors to a python numpy array

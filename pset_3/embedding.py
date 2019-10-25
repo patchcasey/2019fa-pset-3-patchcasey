@@ -8,7 +8,9 @@ class WordEmbedding(object):
         self.vecs = vecs
 
     def __call__(self, word):
+
         """Embed a word
+        :param word: string
         :returns: vector, or None if the word is outside of the vocabulary
         :rtype: ndarray
         """
@@ -16,6 +18,7 @@ class WordEmbedding(object):
 
         #borrowing iterative process from pset-0
         #TODO - perhaps replace with iterator?
+        #TODO - maybe change return 0 to return array of same size as zeroes? or return None and filter out in embed doc?
         count = 0
         for i in self.words:
             j = i.rstrip('\n')
@@ -54,11 +57,11 @@ class WordEmbedding(object):
         :rtype: ndarray (1D)
         """
         document_wordlist = self.tokenize(text)
-        y = map(lambda x: self.__call__(x), document_wordlist)
-        resulting_vector = reduce(lambda a,b : a+b, y)
-        return resulting_vector
+        # create list of vectors of all words
+        y = list(map(lambda x: self.__call__(x), document_wordlist))
+        # filter out any None's
+        z = [item for item in y if item is not None]
+        # add all filtered vectors together
+        resulting_vector = reduce(lambda a,b : a + b, z)
 
-if __name__ == "__main__":
-    test = WordEmbedding(load_words('C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/words.txt'),
-                  load_vectors('C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/vectors.npy.gz'))
-    test.embed_document('the and a zjxchjc')
+        return resulting_vector

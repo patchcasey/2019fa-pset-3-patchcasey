@@ -5,10 +5,12 @@ import pandas as pd
 import numpy as np
 import tempfile
 import fastparquet
-from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
+# from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
 
 from .data import load_words, load_vectors, load_data
 from .cosine_sim import cosine_similarity
+from .embedding import WordEmbedding
+from .cli import salted_hash,
 
 class DataTests(TestCase):
 
@@ -26,6 +28,12 @@ class DataTests(TestCase):
             self.assertEqual(test_list[0], "test\n")
             self.assertEqual(test_list[1], "again\n")
             self.assertEqual(test_list[2], "testme\n")
+
+    # TODO - test this when pipenv install works
+    def test_load_words_raises_error(self):
+        with self.assertRaises(FileNotFoundError):
+            load_data("qpojdpoqjdp/qodhqoiwhd/oiwdhqoiwh.wiuegriuwer")
+
 
     def test_load_vectors(self):
         # with TemporaryDirectory() as tmp:
@@ -55,4 +63,51 @@ class DataTests(TestCase):
         test_output = cosine_similarity(a.flatten(), b.flatten())
         self.assertEqual(round(sklearn_output.item(0,0), 15), round(test_output, 15))
 
+class EmbeddingTests(TestCase):
+    # TODO - figure out why this isn't working
+    # def __init__(self, wordlist, veclist, data_dir):
+    #     self.wordlist = os.path.join(data_dir, "words.txt")
+    #     self.veclist = os.path.join(data_dir, "vectors.npy.gz")
+    #     data_dir = os.path.abspath(os.path.join(os.getcwd(), '.', 'data'))
 
+    def test_call(self):
+        data_dir = os.path.abspath(os.path.join(os.getcwd(), 'data'))
+        wordlist_path = os.path.join(data_dir, "words.txt")
+        wordlist = load_words(wordlist_path)
+        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
+        veclist = load_vectors(veclist_path)
+        string_pos = 'the'
+        string_neg = 'oiqwhdoqihfoweuhfouwehfow'
+
+        x = WordEmbedding(wordlist, veclist)
+        pos_result = x.__call__(string_pos)
+        self.assertEqual(pos_result.shape, (300,))
+        self.assertIsNone(x.__call__(string_neg))
+
+    def test_tokenize(self):
+        data_dir = os.path.abspath(os.path.join(os.getcwd(), 'data'))
+        wordlist_path = os.path.join(data_dir, "words.txt")
+        wordlist = load_words(wordlist_path)
+        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
+        veclist = load_vectors(veclist_path)
+        listofwords = 'test this sentence it\'s hard'
+        tokenized_words = ["test", "this", "sentence", "it\'s", "hard"]
+        x = WordEmbedding(wordlist, veclist)
+        self.assertListEqual(x.tokenize(listofwords), tokenized_words)
+
+    def test_embed_document(self):
+        data_dir = os.path.abspath(os.path.join(os.getcwd(), 'data'))
+        wordlist_path = os.path.join(data_dir, "words.txt")
+        wordlist = load_words(wordlist_path)
+        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
+        veclist = load_vectors(veclist_path)
+        listofwords = 'test this sentence it\'s hard'
+
+        x = WordEmbedding(wordlist, veclist)
+        y = x.embed_document(listofwords)
+
+        self.assertEqual(y.shape, (300,))
+
+class CliTests(TestCase):
+
+    def test_load_words(self):
