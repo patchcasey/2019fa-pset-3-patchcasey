@@ -92,11 +92,10 @@ class EmbeddingTests(TestCase):
     #     data_dir = os.path.abspath(os.path.join(os.getcwd(), '.', 'data'))
 
     def test_call(self):
-        data_dir = os.path.abspath(os.path.join(os.getcwd(), "data"))
-        wordlist_path = os.path.join(data_dir, "words.txt")
-        wordlist = load_words(wordlist_path)
-        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
-        veclist = load_vectors(veclist_path)
+        wordlist = ["the","test"]
+        veclist1 = np.zeros(shape=(300))
+        veclist2 = np.ones(shape=(300))
+        veclist = [veclist1,veclist2]
         string_pos = "the"
         string_neg = "oiqwhdoqihfoweuhfouwehfow"
 
@@ -106,25 +105,24 @@ class EmbeddingTests(TestCase):
         self.assertIsNone(x.__call__(string_neg))
 
     def test_tokenize(self):
-        data_dir = os.path.abspath(os.path.join(os.getcwd(), "data"))
-        wordlist_path = os.path.join(data_dir, "words.txt")
-        wordlist = load_words(wordlist_path)
-        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
-        veclist = load_vectors(veclist_path)
+        wordlist = ["the", "test"]
+        veclist1 = np.zeros(shape=(300))
+        veclist2 = np.ones(shape=(300))
+        veclist = [veclist1, veclist2]
         listofwords = "test this sentence it's hard"
         tokenized_words = ["test", "this", "sentence", "it's", "hard"]
         x = WordEmbedding(wordlist, veclist)
         self.assertListEqual(x.tokenize(listofwords), tokenized_words)
 
     def test_embed_document(self):
-        data_dir = os.path.abspath(os.path.join(os.getcwd(), "data"))
-        wordlist_path = os.path.join(data_dir, "words.txt")
-        wordlist = load_words(wordlist_path)
-        veclist_path = os.path.join(data_dir, "vectors.npy.gz")
-        veclist = load_vectors(veclist_path)
-        listofwords = "test this sentence it's hard"
+        wordlist = ["the", "test"]
+        veclist1 = np.array([1, 2])
+        veclist2 = np.array([2, 3])
+        veclist = [veclist1, veclist2]
+        listofwords = "the test"
 
         x = WordEmbedding(wordlist, veclist)
         y = x.embed_document(listofwords)
 
-        self.assertEqual(y.shape, (300,))
+        self.assertEqual(y[0], 3)
+        self.assertEqual(y[1], 5)
