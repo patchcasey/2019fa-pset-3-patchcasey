@@ -5,12 +5,36 @@ import pandas as pd
 import numpy as np
 import tempfile
 import fastparquet
-# from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
+from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
 
 from .data import load_words, load_vectors, load_data
 from .cosine_sim import cosine_similarity
 from .embedding import WordEmbedding
-from .cli import salted_hash,
+from .find_friends import salted_hash, print_distancefile, calculate_distance
+
+class FindFriendsTests(TestCase):
+
+    def test_saltedhash(self):
+        x = salted_hash('2019fa')
+        self.assertEqual(x, '46a4bb62')
+
+    def test_printdistancefile(self):
+        with TemporaryDirectory() as tmp:
+            tf = tempfile.NamedTemporaryFile(dir=tmp)
+            # fp = tf.name
+            with tf as f:
+                assert os.path.exists(f.name)
+                print_distancefile(f.name)
+            assert not os.path.exists(tf.name)
+
+    def test_calculate_distance(self):
+        a = ['01d2743e']
+        b = ['test']
+        df = pd.DataFrame(data=b,index=a)
+        x = calculate_distance(students_input=df)
+        y = x.iloc[0]['01d2743e']
+        self.assertEqual(y, 0.028073)
+
 
 class DataTests(TestCase):
 
@@ -54,14 +78,14 @@ class DataTests(TestCase):
         returned_df = load_data(fp)
         self.assertEqual(returned_df.shape, (2,2))
 
-class DataTests(TestCase):
+class CosineTests(TestCase):
 
     def test_cosine_similarity(self):
         a = np.array([[5, 4, 3, 2, 1]])
         b = np.array([[4, 3, 2, 5, 1]])
         sklearn_output = sklearn_cossim(a,b)
         test_output = cosine_similarity(a.flatten(), b.flatten())
-        self.assertEqual(round(sklearn_output.item(0,0), 15), round(test_output, 15))
+        self.assertAlmostEqual(sklearn_output.item(0,0), test_output)
 
 class EmbeddingTests(TestCase):
     # TODO - figure out why this isn't working
@@ -107,7 +131,3 @@ class EmbeddingTests(TestCase):
         y = x.embed_document(listofwords)
 
         self.assertEqual(y.shape, (300,))
-
-class CliTests(TestCase):
-
-    def test_load_words(self):

@@ -17,8 +17,7 @@ class WordEmbedding(object):
         # Consider how you implement the vocab lookup.  It should be O(1).
 
         #borrowing iterative process from pset-0
-        #TODO - perhaps replace with iterator?
-        #TODO - maybe change return 0 to return array of same size as zeroes? or return None and filter out in embed doc?
+        #TODO - replace with O(1) not O(n)
         count = 0
         for i in self.words:
             j = i.rstrip('\n')

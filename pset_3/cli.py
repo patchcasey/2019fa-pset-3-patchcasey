@@ -30,6 +30,7 @@ def main(args=None):
 
     loaded_distance = load_data(peer_distance_filename)
     merged_df = pd.merge(loaded_distance, data, left_index=True, right_index=True)
+    print(merged_df)
     closest_5students = merged_df.nsmallest(5, ['distance'])
     # check to make sure I am in the list
     if salted_hash("casey patch") in closest_5students.index:
