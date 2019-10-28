@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 
+
 def load_words(filename):
     """Load a file containing a list of words as a python list
     use case: data/words.txt
@@ -16,6 +17,7 @@ def load_words(filename):
     else:
         raise FileNotFoundError
 
+
 def load_vectors(filename):
     """Loads a file containing word vectors to a python numpy array
     use case: `data/vectors.npy.gz`
@@ -25,8 +27,9 @@ def load_vectors(filename):
     :rtype: ndarray
     """
 
-    vectors = np.load(filename,allow_pickle=True)
+    vectors = np.load(filename, allow_pickle=True)
     return vectors
+
 
 def load_data(filename):
     """Load student response data in parquet format
@@ -38,5 +41,5 @@ def load_data(filename):
     # You will probably need to fill a few NA's and set/sort the index via
     # pandas
 
-    initial = pd.read_parquet(filename, engine='fastparquet')
+    initial = pd.read_parquet(filename, engine="fastparquet")
     return initial

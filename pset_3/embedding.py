@@ -2,6 +2,7 @@ import re
 from pset_3.data import load_words, load_vectors
 from functools import reduce
 
+
 class WordEmbedding(object):
     def __init__(self, words, vecs):
         self.words = words
@@ -16,11 +17,11 @@ class WordEmbedding(object):
         """
         # Consider how you implement the vocab lookup.  It should be O(1).
 
-        #borrowing iterative process from pset-0
-        #TODO - replace with O(1) not O(n)
+        # borrowing iterative process from pset-0
+        # TODO - replace with O(1) not O(n)
         count = 0
         for i in self.words:
-            j = i.rstrip('\n')
+            j = i.rstrip("\n")
             try:
                 if j == word:
                     position_in_words = count
@@ -61,6 +62,6 @@ class WordEmbedding(object):
         # filter out any None's
         z = [item for item in y if item is not None]
         # add all filtered vectors together
-        resulting_vector = reduce(lambda a,b : a + b, z)
+        resulting_vector = reduce(lambda a, b: a + b, z)
 
         return resulting_vector
