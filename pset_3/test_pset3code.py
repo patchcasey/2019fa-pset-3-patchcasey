@@ -10,30 +10,30 @@ from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
 from .data import load_words, load_vectors, load_data
 from .cosine_sim import cosine_similarity
 from .embedding import WordEmbedding
-from .find_friends import salted_hash, print_distancefile, calculate_distance
+# from .find_friends import salted_hash, print_distancefile, calculate_distance
 
 
-class FindFriendsTests(TestCase):
-    def test_saltedhash(self):
-        x = salted_hash("2019fa")
-        self.assertEqual(x, "46a4bb62")
-
-    def test_printdistancefile(self):
-        with TemporaryDirectory() as tmp:
-            tf = tempfile.NamedTemporaryFile(dir=tmp)
-            # fp = tf.name
-            with tf as f:
-                assert os.path.exists(f.name)
-                print_distancefile(f.name)
-            assert not os.path.exists(tf.name)
-
-    def test_calculate_distance(self):
-        a = ["01d2743e"]
-        b = ["test"]
-        df = pd.DataFrame(data=b, index=a)
-        x = calculate_distance(students_input=df)
-        y = x.iloc[0]["01d2743e"]
-        self.assertEqual(y, 0.028073)
+# class FindFriendsTests(TestCase):
+#     def test_saltedhash(self):
+#         x = salted_hash("2019fa")
+#         self.assertEqual(x, "46a4bb62")
+#
+#     def test_printdistancefile(self):
+#         with TemporaryDirectory() as tmp:
+#             tf = tempfile.NamedTemporaryFile(dir=tmp)
+#             # fp = tf.name
+#             with tf as f:
+#                 assert os.path.exists(f.name)
+#                 print_distancefile(f.name)
+#             assert not os.path.exists(tf.name)
+#
+#     def test_calculate_distance(self):
+#         a = ["01d2743e"]
+#         b = ["test"]
+#         df = pd.DataFrame(data=b, index=a)
+#         x = calculate_distance(students_input=df)
+#         y = x.iloc[0]["01d2743e"]
+#         self.assertEqual(y, 0.028073)
 
 
 class DataTests(TestCase):
