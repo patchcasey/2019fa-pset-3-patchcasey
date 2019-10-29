@@ -11,7 +11,7 @@ import tempfile
 
 from pset_3.hash_str import hash_str, str_to_byte, get_csci_salt
 from pset_3.io import atomic_write
-from pset_3.__main__ import call_getuserid, parquet_conv,
+from pset_3.__main__ import call_getuserid, parquet_conv
 
 
 class FakeFileFailure(IOError):
