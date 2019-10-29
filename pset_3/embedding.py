@@ -35,7 +35,7 @@ class WordEmbedding(object):
 
         processed_words = [x.rstrip("\n") for x in self.words]
         position_dict = {str(key): idx for idx, key in enumerate(processed_words)}
-        word_position = position_dict.get(word,None)
+        word_position = position_dict.get(word, None)
         if word_position is None:
             return None
         else:
@@ -74,8 +74,9 @@ class WordEmbedding(object):
 
         return resulting_vector
 
+
 if __name__ == "__main__":
-    wordlist = 'C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/words.txt'
-    veclist = 'C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/vectors.npy.gz'
+    wordlist = "C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/words.txt"
+    veclist = "C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/vectors.npy.gz"
     x = WordEmbedding.from_files(wordlist, veclist)
     y = x.__call__("qoduhqwodhiqwod")

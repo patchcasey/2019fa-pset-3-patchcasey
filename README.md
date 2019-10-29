@@ -1,6 +1,8 @@
 # Pset 3
 
-Add your build badge here!
+[![Build Status](https://travis-ci.com/csci-e-29/2019fa-pset-3-patchcasey.svg?token=5ichzqk8s8tsSTcNuNkm&branch=master)](https://travis-ci.com/csci-e-29/2019fa-pset-3-patchcasey)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ed197c645a619c26e723/maintainability)](https://codeclimate.com/repos/5dafc393441d740178004842/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ed197c645a619c26e723/test_coverage)](https://codeclimate.com/repos/5dafc393441d740178004842/test_coverage)
 
 Customizing our own cookiecutter repo, and using it to complete a Word2Vec
 project.

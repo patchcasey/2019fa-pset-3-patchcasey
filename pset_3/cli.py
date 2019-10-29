@@ -2,6 +2,7 @@ from .embedding import WordEmbedding
 from .data import load_data
 from .hash_str import hash_str, get_csci_salt
 from .cosine_sim import cosine_similarity
+
 # from .find_friends import (
 #     calculate_distance,
 #     print_distancefile,
@@ -43,6 +44,7 @@ def main(args=None):
 
     def print_distancefile(dataframe_to_write, path_to_file=peerdistance_filename()):
         """
+		did not have time to implement atomicwriter - issues with _netrc file and install
 
         :param path_to_file: what file you want to check if is written, then write to
         :return: parquet file in data directory

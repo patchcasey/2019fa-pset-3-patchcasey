@@ -10,6 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity as sklearn_cossim
 from .data import load_words, load_vectors, load_data
 from .cosine_sim import cosine_similarity
 from .embedding import WordEmbedding
+
 # from .find_friends import salted_hash, print_distancefile, calculate_distance
 
 
@@ -96,10 +97,10 @@ class EmbeddingTests(TestCase):
     #     data_dir = os.path.abspath(os.path.join(os.getcwd(), '.', 'data'))
 
     def test_call_return_value(self):
-        wordlist = ["the","test"]
+        wordlist = ["the", "test"]
         veclist1 = np.zeros(shape=(300))
         veclist2 = np.ones(shape=(300))
-        veclist = [veclist1,veclist2]
+        veclist = [veclist1, veclist2]
         string_pos = "the"
         string_neg = "oiqwhdoqihfoweuhfouwehfow"
 
