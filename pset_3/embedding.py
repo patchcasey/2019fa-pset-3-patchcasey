@@ -15,24 +15,32 @@ class WordEmbedding(object):
         :returns: vector, or None if the word is outside of the vocabulary
         :rtype: ndarray
         """
-        # Consider how you implement the vocab lookup.  It should be O(1).
 
-        # borrowing iterative process from pset-0
-        # TODO - replace with O(1) not O(n)
-        count = 0
-        for i in self.words:
-            j = i.rstrip("\n")
-            try:
-                if j == word:
-                    position_in_words = count
-                    break
-                else:
-                    count += 1
-            finally:
-                if count == len(self.words):
-                    return None
+        # first O(n) implementation - leaving in for discussion during Peer Review
+        # count = 0
+        # for i in self.words:
+        #     j = i.rstrip("\n")
+        #     try:
+        #         if j == word:
+        #             position_in_words = count
+        #             break
+        #         else:
+        #             count += 1
+        #     finally:
+        #         if count == len(self.words):
+        #             return None
+        #
+        # word_vector = self.vecs[position_in_words]
+        # return word_vector
 
-        word_vector = self.vecs[position_in_words]
+        processed_words = [x.rstrip("\n") for x in self.words]
+        position_dict = {str(key): idx for idx, key in enumerate(processed_words)}
+        word_position = position_dict.get(word,None)
+        if word_position is None:
+            return None
+        else:
+            word_vector = self.vecs[word_position]
+
         return word_vector
 
     @classmethod
@@ -65,3 +73,9 @@ class WordEmbedding(object):
         resulting_vector = reduce(lambda a, b: a + b, z)
 
         return resulting_vector
+
+if __name__ == "__main__":
+    wordlist = 'C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/words.txt'
+    veclist = 'C:/Users/Boiiiiiii/2019fa-pset-3-patchcasey/data/vectors.npy.gz'
+    x = WordEmbedding.from_files(wordlist, veclist)
+    y = x.__call__("qoduhqwodhiqwod")

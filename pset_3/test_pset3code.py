@@ -13,6 +13,10 @@ from .embedding import WordEmbedding
 # from .find_friends import salted_hash, print_distancefile, calculate_distance
 
 
+# was not able to implement all of this testing...
+# it broke travis due to requiring a data file be accessed from the data folder
+# I ran out of time to figure out a way to get this to work, but the tests do pass!
+
 # class FindFriendsTests(TestCase):
 #     def test_saltedhash(self):
 #         x = salted_hash("2019fa")
@@ -91,7 +95,7 @@ class EmbeddingTests(TestCase):
     #     self.veclist = os.path.join(data_dir, "vectors.npy.gz")
     #     data_dir = os.path.abspath(os.path.join(os.getcwd(), '.', 'data'))
 
-    def test_call(self):
+    def test_call_return_value(self):
         wordlist = ["the","test"]
         veclist1 = np.zeros(shape=(300))
         veclist2 = np.ones(shape=(300))
@@ -101,7 +105,15 @@ class EmbeddingTests(TestCase):
 
         x = WordEmbedding(wordlist, veclist)
         pos_result = x.__call__(string_pos)
-        self.assertEqual(pos_result.shape, (300,))
+        self.assertEqual(pos_result.all(), 0)
+        self.assertNotEqual(pos_result.any(), 1)
+
+    def test_call_returns_None(self):
+        wordlist = ["the", "test"]
+        veclist = [np.zeros(shape=(300)), np.ones(shape=(300))]
+        string_neg = "oiqwhdoqihfoweuhfouwehfow"
+
+        x = WordEmbedding(wordlist, veclist)
         self.assertIsNone(x.__call__(string_neg))
 
     def test_tokenize(self):
